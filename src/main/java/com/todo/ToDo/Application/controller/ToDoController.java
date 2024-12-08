@@ -5,12 +5,16 @@ import com.todo.ToDo.Application.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class ToDoController {
-    @Autowired
-    private ToDoService service;
+
+    private final ToDoService service;
+
+    public ToDoController(ToDoService service) {
+        this.service = service;
+    }
 
     @PostMapping("/addTask")
     public String addTask(@RequestBody ToDo task) {
@@ -29,7 +33,7 @@ public class ToDoController {
 
     @PutMapping("/updateTask/{id}")
     public boolean updateproductsById(@PathVariable Long id, @RequestBody ToDo tasks) {
-        return service.saveOrUpdateToDoTask(id, tasks);
+        return service.updateToDoTask(id, tasks);
     }
 
     @DeleteMapping("/deleteTask/{id}")

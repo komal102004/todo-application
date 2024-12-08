@@ -15,7 +15,6 @@ public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
-    @Column
    private String title;
    private Date date;
    private String status;
