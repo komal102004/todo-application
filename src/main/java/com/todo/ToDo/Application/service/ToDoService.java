@@ -35,9 +35,9 @@ public class ToDoService {
         if(existingTask==null){
             return false;
         }
-        existingTask.setTitle(todo.getTitle());
-        existingTask.setStatus(todo.getStatus());
-        existingTask.setDate(todo.getDate());
+//        existingTask.setTitle(todo.getTitle());
+//        existingTask.setStatus(todo.getStatus());
+//        existingTask.setDate(todo.getDate());
         repo.save(existingTask);
         return true;
     }
@@ -54,6 +54,6 @@ public class ToDoService {
 
     public String createTask(ToDo todo) {
         repo.save(todo);
-        return "Task added Sucessfully" + todo.getId();
+        return "Task added Sucessfully" ;
     }
 }

@@ -1,8 +1,7 @@
 package com.todo.ToDo.Application.controller;
 
-import com.todo.ToDo.Application.model.ToDo;
-import com.todo.ToDo.Application.service.ToDoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.todo.ToDo.Application.model.*;
+import com.todo.ToDo.Application.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
