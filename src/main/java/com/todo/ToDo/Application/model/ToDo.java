@@ -15,13 +15,13 @@ import java.util.Date;
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty
+//    @JsonProperty
    private long id;
-    @JsonProperty
+//    @JsonProperty
    private String title;
-    @JsonProperty
+//    @JsonProperty
    private Date date;
-    @JsonProperty
+//    @JsonProperty
    private String status;
 
 }

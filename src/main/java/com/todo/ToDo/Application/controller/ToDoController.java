@@ -1,5 +1,7 @@
 package com.todo.ToDo.Application.controller;
 
+import com.todo.ToDo.Application.dtos.ToDoRequest;
+import com.todo.ToDo.Application.dtos.ToDoResponse;
 import com.todo.ToDo.Application.model.*;
 import com.todo.ToDo.Application.service.*;
 import org.springframework.web.bind.annotation.*;
@@ -14,25 +16,28 @@ public class ToDoController {
     public ToDoController(ToDoService service) {
         this.service = service;
     }
-
     @PostMapping("/addTask")
-    public String addTask(@RequestBody ToDo task) {
-        return service.createTask(task);
-    }
+    public ToDoResponse addTask(@RequestBody ToDoRequest toDoRequest) {
+        return service.createTask(toDoRequest);
+}
+//    @PostMapping("/addTask")
+//    public String addTask(@RequestBody ToDo task) {
+//        return service.createTask(task);
+//    }
 
     @GetMapping("/tasks")
-    public List<ToDo> findAllTasks() {
+    public List<ToDoResponse> findAllTasks() {
         return service.getAllToDoTasks();
     }
 
     @GetMapping("/task/{id}")
-    public ToDo findProductByID(@PathVariable("id") Long id) {
+    public ToDoResponse findProductByID(@PathVariable("id") Long id) {
         return service.getAllToDoTasksById(id);
     }
 
     @PutMapping("/updateTask/{id}")
-    public boolean updateproductsById(@PathVariable Long id, @RequestBody ToDo tasks) {
-        return service.updateToDoTask(id, tasks);
+    public ToDoResponse updateproductsById(@PathVariable Long id, @RequestBody ToDoRequest toDoRequest) {
+        return service.updateToDoTask(id, toDoRequest);
     }
 
     @DeleteMapping("/deleteTask/{id}")

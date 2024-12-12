@@ -3,6 +3,103 @@
 <head>
     <title>Add Task</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+
+        input, select, button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 15px; /* Ensure uniform margin between inputs */
+}
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+       select {
+    margin-top: 5px; /* Optional: add margin to the top of select box if needed */
+}
+
+button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px; /* Optional: add margin to the button */
+}
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 15px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            label {
+
+                font-size: 14px;
+
+            }
+        }
+
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -39,17 +136,14 @@
 <h1>Add New Task</h1>
 <form>
     <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
-    <br>
+    <input type="text" id="title" name="title" placeholder="Enter task title" required>
     <label for="date">Date:</label>
     <input type="date" id="date" name="date" required>
-    <br>
     <label for="status">Status:</label>
     <select id="status" name="status">
         <option value="Pending">Pending</option>
         <option value="Completed">Completed</option>
     </select>
-    <br>
     <button type="submit">Add Task</button>
 </form>
 <a href="/">Back to Home</a>
