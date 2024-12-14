@@ -1,6 +1,7 @@
 package com.todo.ToDo.Application.service;
 
 
+import com.todo.ToDo.Application.mapper.ToDoMapper;
 import com.todo.ToDo.Application.dtos.ToDoRequest;
 import com.todo.ToDo.Application.dtos.ToDoResponse;
 import com.todo.ToDo.Application.model.ToDo;
@@ -10,61 +11,56 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 //@AllArgsConstructor
 public class ToDoService {
 
    private final ToDoRepository repo;
+   private final ToDoMapper toDoMapper;
 
-    public ToDoService(ToDoRepository repo) {
+    public ToDoService(ToDoRepository repo, ToDoMapper toDoMapper) {
         this.repo = repo;
+        this.toDoMapper = toDoMapper;
     }
 
     public List<ToDoResponse> getAllToDoTasks() {
         ArrayList<ToDoResponse> todoList = new ArrayList<>();
         repo.findAll().forEach(toDo ->{
-            ToDoResponse response=ToDoResponse.builder()
-                    .id(toDo.getId())
-                    .title(toDo.getTitle())
-                    .status(toDo.getStatus())
-                    .date(toDo.getDate())
-                    .build();
-                    todoList.add(response);
+            ToDoResponse response=toDoMapper.toDoResponseDto(toDo);
+            response.setMessage("Task with id " + id + " updated successfully");
+            todoList.add(response);
         });
         return todoList;
     }
 
     public ToDoResponse getAllToDoTasksById(Long id) {
+
         ToDo toDo = repo.findById(id).orElse(null);
         if (toDo == null) {
             throw new RuntimeException("ToDo not found for id: " + id);
         }
 
-        return ToDoResponse.builder()
-                .id(toDo.getId())
-                .title(toDo.getTitle())
-                .status(toDo.getStatus())
-                .date(toDo.getDate())
-                .build();
+        ToDoResponse response=toDoMapper.toDoResponseDto(toDo);
+        response.setMessage("Task with id " + id + " updated successfully");
+        return response;
+
     }
 
 
     public ToDoResponse updateToDoTask(Long id,ToDoRequest updateToDoRequest ) {
+
         ToDo existingTask=repo.findById(id).orElse(null);
         if(existingTask==null){
             return ToDoResponse.builder().message("No task is found with this id").build();
         }
-       existingTask.setTitle(updateToDoRequest.getTitle());
-        existingTask.setStatus(updateToDoRequest.getStatus());
-        existingTask.setDate(updateToDoRequest.getDate());
+
+        toDoMapper.updateEntityFromRequest(updateToDoRequest, existingTask);
         repo.save(existingTask);
-        return ToDoResponse.builder()
-                .id(existingTask.getId())
-                .title(existingTask.getTitle())
-                .date(existingTask.getDate())
-                .status(existingTask.getStatus())
-                .message("Task with id "+id+" update sucessfully")
-                .build();
+       ToDoResponse response=toDoMapper.toDoResponseDto(existingTask);
+       response.setMessage("Task with id " + id + " updated successfully");
+       return response;
 
     }
 
@@ -77,16 +73,10 @@ public class ToDoService {
         return true;
     }
     public ToDoResponse createTask(ToDoRequest toDoRequest) {
-        ToDo toDo=new ToDo();
-        toDo.setTitle(toDoRequest.getTitle());
-        toDo.setStatus(toDoRequest.getStatus());
-        toDo.setDate(toDoRequest.getDate());
+
+        ToDo toDo=toDoMapper.toEntity(toDoRequest);
         repo.save(toDo);
-        ToDoResponse response=new ToDoResponse();
-        response.setTitle(toDo.getTitle());
-        response.setStatus(toDo.getStatus());
-        response.setDate(toDo.getDate());
-        response.setId(toDo.getId());
+        ToDoResponse response=toDoMapper.toDoResponseDto(toDo);
         response.setMessage("Task added Sucessfully");
         return response;
 
